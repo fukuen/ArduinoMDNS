@@ -26,6 +26,7 @@ extern "C" {
 }
 
 #include <Arduino.h>
+#include <WiFiEspUdp.h>
 
 typedef uint8_t byte;
 
@@ -77,7 +78,7 @@ typedef void (*MDNSServiceFoundCallback)(const char*, MDNSServiceProtocol_t, con
 class MDNS
 {
 private:
-   UDP*                  _udp;
+   WiFiEspUDP*           _udp;
    IPAddress             _ipAddress;
    MDNSDataInternal_t    _mdnsData;
    MDNSState_t           _state;
@@ -119,7 +120,7 @@ private:
    
    void _finishedResolvingName(char* name, const byte ipAddr[4]);
 public:
-   MDNS(UDP& udp);
+   MDNS(WiFiEspUDP& udp);
    ~MDNS();
    
    int begin(const IPAddress& ip);

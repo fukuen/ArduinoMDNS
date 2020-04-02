@@ -24,7 +24,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <Arduino.h>
-#include <Udp.h>
+#include <WiFiEspUdp.h>
 
 extern "C" {
    #include <utility/EthernetUtil.h>
@@ -110,7 +110,7 @@ void my_free(void* ptr)
 #endif
 }
 
-MDNS::MDNS(UDP& udp)
+MDNS::MDNS(WiFiEspUDP& udp)
 {
    memset(&this->_mdnsData, 0, sizeof(MDNSDataInternal_t));
    memset(&this->_serviceRecords, 0, sizeof(this->_serviceRecords));
@@ -774,10 +774,11 @@ MDNSError_t MDNS::_processMDNSQuery()
                            if (!recordsFound[j] && servMatches[j] && servNames[j])
                               servMatches[j] &= this->_matchStringPart(&servNames[j], &servLens[j],
                                                                        buf, ir);
-                              if (!partMatched[j])
-                                 partMatched[j] = servMatches[j];
-                              
-                              lastWasCompressed[j] = 0;
+//TODO
+                           if (!partMatched[j])
+                              partMatched[j] = servMatches[j];
+                           
+                           lastWasCompressed[j] = 0;
                         }               
                         
                         for (j=0; j<MDNS_MAX_SERVICES_PER_PACKET; j++) {
